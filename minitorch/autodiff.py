@@ -179,7 +179,8 @@ class FunctionBase:
             (see `is_constant` to remove unneeded variables)
 
         """
-        return []
+        lst_deriv = list(cls.backward(ctx, d_output))
+        return [VariableWithDeriv(inputs[i], lst_deriv[i]) for i in range(len(inputs)) if not is_constant(inputs[i])]
 
 
 def is_leaf(val):
