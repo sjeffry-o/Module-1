@@ -202,5 +202,18 @@ def backpropagate(final_variable_with_deriv):
        final_variable_with_deriv (:class:`VariableWithDeriv`): The final variable
            and its derivative that we want to propagate backward to the leaves.
     """
-    # TODO: Implement for Task 1.4.
-    raise NotImplementedError('Need to implement for Task 1.4')
+    proc_lst = [final_variable_with_deriv]
+    while proc_lst:
+        curr_var_deriv = proc_lst.pop(0)
+        curr_var = curr_var_deriv.variable
+        curr_deriv = curr_var_deriv.deriv
+        if is_leaf(curr_var):
+             curr_var._add_deriv(curr_deriv)
+             continue
+        backprop_step_lst = curr_var.history.backprop_step(curr_deriv)
+        proc_lst.extend(backprop_step_lst)
+
+
+
+
+
